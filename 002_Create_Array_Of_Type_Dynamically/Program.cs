@@ -13,17 +13,7 @@ namespace _002_Create_Array_Of_Type_Dynamically
             var dataValues = "1, Fulano, Matodo001, 25.49";
 
             Type[] paramTypes = GetParams(dataTypes);
-            Object[] paramValues = GetValues(dataValues);
-            Dictionary<Int32, Dictionary<Type, Object>> dic = new Dictionary<Int32, Dictionary<Type, Object>>();
-
-            for (int x = 0; x < paramTypes.Length; x++)
-            {
-                Type type = paramTypes[x];
-                Object value = paramValues[x];
-                Dictionary<Type, Object> dicVal = new Dictionary<Type, Object>();
-                dicVal.Add(type, Convert.ChangeType(value, type, CultureInfo.InvariantCulture));
-                dic.Add(x, dicVal);
-            }
+            Object[] paramValues = GetValues(dataValues, paramTypes);
         }
 
         static Type[] GetParams(String dataTypes)
@@ -41,10 +31,16 @@ namespace _002_Create_Array_Of_Type_Dynamically
             return listTypes.ToArray<Type>();
         }
 
-        static Object[] GetValues(String dataValues)
+        static Object[] GetValues(String dataValues, Type[] paramTypes)
         {
-            char[] charSeparators = new char[] { ',', ' ' };
-            return dataValues.Split(charSeparators, StringSplitOptions.RemoveEmptyEntries);
+            Char[] charSeparators = new Char[] { ',', ' ' };
+            Object[] paramValues = dataValues.Split(charSeparators, StringSplitOptions.RemoveEmptyEntries);
+            Object[] paramValues_NEW = new Object[paramValues.Length];
+
+            for (int i = 0; i < paramValues.Length; i++)
+                paramValues_NEW[i] = Convert.ChangeType(paramValues[i], paramTypes[i], CultureInfo.InvariantCulture);
+
+            return paramValues_NEW;
         }
     }
 }

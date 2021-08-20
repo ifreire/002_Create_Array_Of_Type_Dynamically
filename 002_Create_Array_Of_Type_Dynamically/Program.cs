@@ -7,6 +7,8 @@ namespace _002_Create_Array_Of_Type_Dynamically
 {
     class Program
     {
+        private static char[] charSeparators = new char[] { ',', ' ' };
+
         static void Main(string[] args)
         {
             var dataTypes = "System.UInt32, System.String, System.String, System.Single";
@@ -18,22 +20,17 @@ namespace _002_Create_Array_Of_Type_Dynamically
 
         static Type[] GetParams(String dataTypes)
         {
-            //out or in parameters of your function.   
-            char[] charSeparators = new char[] { ',', ' ' };
             string[] types = dataTypes.Split(charSeparators, StringSplitOptions.RemoveEmptyEntries);
-
-            // create a list of data types for each argument
             List<Type> listTypes = new List<Type>();
-            foreach (string t in types)
-                listTypes.Add(Type.GetType(t));
 
-            // convert the list to an array and return
-            return listTypes.ToArray<Type>();
+            foreach (string type in types)
+                listTypes.Add(Type.GetType(type));
+
+            return listTypes.ToArray();
         }
 
         static Object[] GetValues(String dataValues, Type[] paramTypes)
         {
-            Char[] charSeparators = new Char[] { ',', ' ' };
             Object[] paramValues = dataValues.Split(charSeparators, StringSplitOptions.RemoveEmptyEntries);
             Object[] paramValues_NEW = new Object[paramValues.Length];
 
